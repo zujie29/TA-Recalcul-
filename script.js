@@ -7,13 +7,18 @@ const totalInterestEl = document.getElementById('total-interest');
 const durationLabelEl = document.getElementById('duration-label');
 const dueDaySelect = document.getElementById('echeance-day');
 const specialDayInput = document.getElementById('special-day');
+const productSelect = document.getElementById('produit');
+const reportProductEl = document.getElementById('report-product');
+const reportNameEl = document.getElementById('report-name');
+const reportRateEl = document.getElementById('report-rate');
+const customerNameInput = document.getElementById('Nom');
 
 const moneyFormatter = new Intl.NumberFormat('fr-FR', {
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });
 
-const DEFAULT_START_DATE = '2026-11-09';
+const DEFAULT_START_DATE = '2026-01-01';
 
 function formatCurrency(value) {
   return `${moneyFormatter.format(Math.round(Number(value) || 0))} Ar`;
@@ -113,6 +118,71 @@ function getMonthCountBetween(startDateText, endDate) {
   return Math.max(0, diff);
 }
 
+
+function getSelectedProductLabel() {
+  if (!productSelect) return 'RFR';
+  return productSelect.value === '2' ? 'Crédit Immobilier (CIM)' : 'Renforcement de fond re roulement (RFR)';
+}
+
+function syncProductLabel() {
+  if (reportProductEl) {
+    reportProductEl.textContent = getSelectedProductLabel();
+  }
+}
+
+function syncNameLabel() {
+  if (reportNameEl) {
+    const value = customerNameInput && customerNameInput.value ? customerNameInput.value.trim() : '—';
+    reportNameEl.textContent = value;
+  }
+}
+
+function syncNumberLabel() {
+  const reportNumberEl = document.getElementById('report-number');
+  if (reportNumberEl) {
+    const value = document.getElementById('Numero')?.value?.trim() || '—';
+    reportNumberEl.textContent = value;
+  }
+}
+
+function syncRateColumnHeader() {
+  const rateInput = document.getElementById('rate');
+  const headerCell = document.querySelector('.detail-table thead th:nth-child(5)');
+  const reportRateCell = document.getElementById('report-rate');
+
+  if (!rateInput) return;
+
+  const rateValue = Number(rateInput.value);
+  const formattedRate = Number.isFinite(rateValue) && rateValue >= 0 ? `${rateValue}%` : '—';
+
+  if (headerCell) {
+    headerCell.textContent = Number.isFinite(rateValue) && rateValue >= 0
+      ? `Zana-bola (${rateValue}%)`
+      : 'Zana-bola';
+  }
+
+  if (reportRateCell) {
+    reportRateCell.textContent = formattedRate;
+  }
+}
+
+function syncDurationLabel() {
+  const monthsInput = document.getElementById('months');
+  const reportMonthsEl = document.getElementById('report-months');
+  if (!monthsInput) return;
+
+  const monthsValue = Number(monthsInput.value);
+  const displayValue = Number.isFinite(monthsValue) && monthsValue > 0 ? String(monthsValue) : '0';
+
+  if (reportMonthsEl) {
+    reportMonthsEl.textContent = displayValue;
+  }
+
+  if (durationLabelEl) {
+    durationLabelEl.textContent = `${displayValue} volana`;
+  }
+}
+
 function renderSchedule(rows, payment, totalPaid, totalInterest, principalAmount = 0, startDateText = '') {
   scheduleBody.innerHTML = '';
   scheduleFooter.innerHTML = '';
@@ -153,10 +223,13 @@ function renderSchedule(rows, payment, totalPaid, totalInterest, principalAmount
   const reportDateLineEl = document.querySelector('.report-date-line');
   const safeStartDate = (startDateText || document.getElementById('start-date')?.value || DEFAULT_START_DATE);
 
-  if (reportNumberEl) reportNumberEl.textContent = '';
+  if (reportNumberEl) {
+    const value = document.getElementById('Numero')?.value?.trim() || '—';
+    reportNumberEl.textContent = value;
+  }
   if (reportStartDateEl) reportStartDateEl.textContent = formatShortDate(safeStartDate);
   if (reportDateLineEl) {
-    reportDateLineEl.textContent = `Natao teto FIANARANTSOA ${formatShortDate(safeStartDate)}`;
+    reportDateLineEl.textContent = `Natao teto FIANARANTSOA ny ${formatShortDate(safeStartDate)}`;
   }
   if (reportMonthsEl) {
     const selectedMonths = Number(document.getElementById('months')?.value) || rows.length;
@@ -194,6 +267,11 @@ function calculateFromInputs() {
     return;
   }
 
+  syncProductLabel();
+  syncNameLabel();
+  syncNumberLabel();
+  syncRateColumnHeader();
+
   const result = computeAmortization(principal, ratePercent, months, startDate, dueDay, specialDay);
   if (durationLabelEl) durationLabelEl.textContent = `${months} volana`;
   renderSchedule(result.rows, result.payment, result.totalPaid, result.totalInterest, principal, startDate);
@@ -205,12 +283,6 @@ function onSubmit(event) {
 }
 
 form.addEventListener('submit', onSubmit);
-['amount', 'rate', 'months', 'start-date'].forEach((id) => {
-  document.getElementById(id).addEventListener('input', calculateFromInputs);
-  document.getElementById(id).addEventListener('change', calculateFromInputs);
-});
-dueDaySelect.addEventListener('change', calculateFromInputs);
-specialDayInput.addEventListener('input', calculateFromInputs);
 document.getElementById('print-table-btn')?.addEventListener('click', () => window.print());
 
 const startDateInput = document.getElementById('start-date');
@@ -218,6 +290,10 @@ if (startDateInput && !startDateInput.value) {
   startDateInput.value = DEFAULT_START_DATE;
 }
 
+syncProductLabel();
+syncNameLabel();
+syncNumberLabel();
+syncRateColumnHeader();
 const initialResult = computeAmortization(1000000, 2.75, 11, (document.getElementById('start-date')?.value || DEFAULT_START_DATE), 25, 22);
 if (durationLabelEl) durationLabelEl.textContent = '11 volana';
 renderSchedule(initialResult.rows, initialResult.payment, initialResult.totalPaid, initialResult.totalInterest, 1000000, document.getElementById('start-date')?.value || DEFAULT_START_DATE);

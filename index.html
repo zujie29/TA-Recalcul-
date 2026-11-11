@@ -1,157 +1,185 @@
 <!DOCTYPE html>
 <html lang="mg">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title>Kajy fampindramam-bola isam-bolana</title>
-    <link rel="stylesheet" href="style.css?v=20261110-1510" />
-  </head>
-  <body>
-    <div class="app-shell">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">Ara-bola</p>
-          <h1>TA RFR sy CIM (Raha Poulet PRO : i = 3.50%)</h1>
-        </div>
-      </header>
 
-      <main class="main-grid">
-        <section class="panel form-panel">
-          <h2>Toetran'ny fampindramam-bola</h2>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Kajy fampindramam-bola isam-bolana</title>
+  <link rel="stylesheet" href="style.css?v=20261111-2025" />
+</head>
 
-          <form id="loan-form">
-            <div class="field-group">
-              <label for="amount">Reni-vola</label>
-              <div class="input-wrap">
-                <span>Ar</span>
-                <input id="amount" name="amount" type="number" min="0" step="100" value="1000000" required />
-              </div>
-            </div>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Ara-bola</p>
+        <h1>TA RFR sy CIM</h1>
+      </div>
+    </header>
 
-            <div class="field-group">
-              <label for="rate">Tahan'ny Zana-bola</label>
-              <div class="input-wrap">
-                <input id="rate" name="rate" type="number" min="0" step="0.01" value="2.75" required />
-                <span>%</span>
-              </div>
-              <small class="helper-text">Formula ampiasaina: i = (C × n × t) / 30, miaraka amin'ny n = isan'ny andro eo anelanelan'ny daty manomboka sy ny daty fanonerana (faharoa fotsiny)</small>
-            </div>
+    <main class="main-grid">
+      <section class="panel form-panel">
+        <h2>Toetran'ny fampindramam-bola</h2>
 
-            <div class="field-group">
-              <label for="months">Isan'ny Echeance</label>
-              <div class="input-wrap">
-                <input id="months" name="months" type="number" min="1" step="1" value="11" required />
-              </div>
-            </div>
+        <form id="loan-form">
 
-            <div class="field-group">
-              <label for="echeance-day">Daty fanonerana</label>
-              <select id="echeance-day" name="echeance-day">
-                <option value="25" selected>25</option>
-                <option value="28">28</option>
-              </select>
-            </div>
+          <div class="field-group">
+            <label for="Nom">ANARANA : </label>
+            <input id="Nom" name="Nom" type="text" required />
+          </div>
 
-            <div class="field-group">
-              <label for="special-day">Daty manokana ho an'ny Jona sy Desambra</label>
-              <div class="input-wrap">
-                <input id="special-day" name="special-day" type="number" min="1" max="31" value="22" />
-              </div>
-            </div>
+          <div class="field-group">
+            <label for="Numero">LAHARANA : </label>
+            <input id="Numero" name="Numero" type="text" required />
+          </div>
 
-            <div class="field-group">
-              <label for="start-date">Daty manomboka</label>
-              <div class="input-wrap">
-                <input id="start-date" name="start-date" type="date" value="2026-11-09" required />
-              </div>
-            </div>
+          <div class="field-group">
+            <label for="produit">Type de produit </label>
+            <select id="produit" name="produit">
+              <option value="1" selected>RFR</option>
+              <option value="2">CIM</option>
+            </select>
+          </div>
 
-            <button type="submit">Kajy ny fandaharam-potoana</button>
-          </form>
-        </section>
-
-        <section class="panel results-panel hidden">
-          <h2>Famintinana</h2>
-
-          <div class="summary-grid">
-            <div class="summary-item">
-              <span class="label">Totaly naverina</span>
-              <strong id="total-paid">0 Ar</strong>
-            </div>
-            <div class="summary-item">
-              <span class="label">Totaly zava-bola</span>
-              <strong id="total-interest">0 Ar</strong>
-            </div>
-            <div class="summary-item full-row">
-              <span class="label">Fotoana</span>
-              <strong id="duration-label">0 volana</strong>
+          <div class="field-group">
+            <label for="amount">Reni-vola</label>
+            <div class="input-wrap">
+              <span>Ar</span>
+              <input id="amount" name="amount" type="number" min="0" step="100" value="1000000" required />
             </div>
           </div>
-        </section>
-      </main>
 
-      <section class="panel table-panel report-table-panel">
-        <div class="table-header report-header">
-          <h2>TABILAO FAMERENANAM-BOLA</h2>
-        </div>
-
-        <div class="table-wrap report-wrap">
-          <table class="report-table">
-            <tbody>
-              <tr class="report-meta-row">
-                <td><strong>Karazana Fampindramana :</strong> </td>
-                <td><strong>LAHARANA:</strong> </td>
-              </tr>
-              <tr class="report-meta-row">
-                <td><strong>Daty manomboka (Date d'Oct):</strong> <span id="report-start-date">09/11/26</span></td>
-                <td><strong>Volana:</strong> <span id="report-months">12</span></td>
-              </tr>
-              <tr class="report-meta-row">
-                <td><strong>Renivola nampisamborina:</strong> <span id="report-principal">1 000 000</span></td>
-                <td><strong>Hofa voaloahany:</strong> <span id="report-balance">0</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="table-wrap report-wrap table-space">
-          <table class="report-table detail-table">
-            <thead>
-              <tr>
-                <th>Laharana</th>
-                <th>Daty famerenana</th>
-                <th>Renivola sisa</th>
-                <th>Renivola aloa</th>
-                <th>Zana-bola</th>
-                <th>Totaliny</th>
-              </tr>
-            </thead>
-            <tbody id="schedule-body"></tbody>
-            <tfoot id="schedule-footer"></tfoot>
-          </table>
-        </div>
-
-        <div class="report-print-footer">
-          <div class="report-date-line">Natao teto FIANARANTSOA 09/11/2026</div>
-          <div class="report-signatures">
-            <div class="signature-block">
-              <span>Ny Mpindrana</span>
-            </div>
-            <div class="signature-block">
-              <span>Ny vadin'ny mpindrana</span>
+          <div class="field-group">
+            <label for="rate">Tahan'ny Zana-bola</label>
+            <div class="input-wrap">
+              <input id="rate" name="rate" type="number" min="0" step="0.01" value="2.75" required />
+              <span>%</span>
             </div>
           </div>
-        </div>
 
-        <div class="print-actions">
-          <button id="print-table-btn" type="button">Imprimer le tableau</button>
+          <div class="field-group">
+            <label for="months">Isan'ny Echeance</label>
+            <div class="input-wrap">
+              <input id="months" name="months" type="number" min="1" step="1" value="11" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="echeance-day">Daty fanonerana</label>
+            <select id="echeance-day" name="echeance-day">
+              <option value="25" selected>25</option>
+              <option value="28">28</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="special-day">Daty manokana ho an'ny Jona sy Desambra</label>
+            <div class="input-wrap">
+              <input id="special-day" name="special-day" type="number" min="1" max="31" value="22" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="start-date">Daty manomboka</label>
+            <div class="input-wrap">
+              <input id="start-date" name="start-date" type="date" value="2026-11-09" required />
+            </div>
+          </div>
+
+          <button type="submit">Kajy ny fandaharam-potoana</button>
+        </form>
+      </section>
+
+      <section class="panel results-panel hidden">
+        <h2>Famintinana</h2>
+
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="label">Totaly naverina</span>
+            <strong id="total-paid">0 Ar</strong>
+          </div>
+          <div class="summary-item">
+            <span class="label">Totaly zava-bola</span>
+            <strong id="total-interest">0 Ar</strong>
+          </div>
+          <div class="summary-item full-row">
+            <span class="label">Fotoana</span>
+            <strong id="duration-label">0 volana</strong>
+          </div>
         </div>
       </section>
-    </div>
+    </main>
 
-    <script src="script.js?v=20261110-1515"></script>
-  </body>
+    <section class="panel table-panel report-table-panel">
+      <div class="table-header report-header">
+        <h2>TABILAO FAMERENANAM-BOLA</h2>
+      </div>
+
+      <div class="table-wrap report-wrap">
+        <table class="report-table">
+          <tbody>
+            <tr class="report-meta-row">
+              <td><strong>ANARANA :</strong> <span id="report-name"></span></td>
+              <td><strong>LAHARANA:</strong> <span id="report-number"></span></td>
+            </tr>
+            <tr class="report-meta-row">
+              <td><strong>Karazana Fampindramana : </strong> <span id="report-product">RFR</span></td>
+              <td> <strong>Zana-bola : <span id="report-rate"> </span></strong></td>
+            </tr>
+            <tr class="report-meta-row">
+              <td><strong>Daty manomboka (Date d'Oct):</strong> <span id="report-start-date">09/11/26</span></td>
+              <td><strong>Faharetany : </strong> <span id="report-dure">12</span></td>
+            </tr>
+            <tr class="report-meta-row">
+              <td><strong>Renivola nampisamborina:</strong> <span id="report-principal">1 000 000</span></td>
+              <td><strong>Hofa voaloahany:</strong> <span id="report-balance">0</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap report-wrap table-space">
+        <table class="report-table detail-table">
+          <thead>
+            <tr>
+              <th>Laharana</th>
+              <th>Daty famerenana</th>
+              <th>Renivola sisa</th>
+              <th>Renivola aloa</th>
+              <th>Zana-bola</th>
+              <th>Totaliny</th>
+            </tr>
+          </thead>
+          <tbody id="schedule-body"></tbody>
+          <tfoot id="schedule-footer"></tfoot>
+        </table>
+      </div>
+
+      <div class="report-print-footer">
+        <div class="report-date-line"></div>
+        <div class="report-signatures">
+          <div class="signature-block">
+            <span>Ny Mpindrana</span>
+          </div>
+          <div class="signature-block">
+            <span>Ny vadin'ny mpindrana</span>
+          </div>
+        </div>
+        <div>
+          <br><br><br>
+        </div>
+      </div>
+
+      <div class="print-actions">
+        <button id="print-table-btn" type="button">Imprimer le tableau</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js?v=20261111-2025"></script>
+</body>
+
 </html>
